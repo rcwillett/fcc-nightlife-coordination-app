@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const httpHelper = require('../helpers/http-helper');
+const request = require('request');
 
 router.get('local-destinations', function(req, res, next){
   next();
