@@ -6,7 +6,7 @@ const request = require('request');
 // const LocalStrategy = require('passport-local').Strategy;
 // const FacebookStrategy = require('passport-facebook').Strategy;
 // const TwitterStrategy = require('passport-twitter').Strategy;
-// const GitHubStrategy = require('passport-github').Strategy;
+const GitHubStrategy = require('passport-github').Strategy;
 // const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 // const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 // const OpenIDStrategy = require('passport-openid').Strategy;
@@ -119,64 +119,64 @@ passport.deserializeUser((id, done) => {
 //   }
 // }));
 //
-// /**
-//  * Sign in with GitHub.
-//  */
-// passport.use(new GitHubStrategy({
-//   clientID: process.env.GITHUB_ID,
-//   clientSecret: process.env.GITHUB_SECRET,
-//   callbackURL: '/auth/github/callback',
-//   passReqToCallback: true
-// }, (req, accessToken, refreshToken, profile, done) => {
-//   if (req.user) {
-//     User.findOne({ github: profile.id }, (err, existingUser) => {
-//       if (existingUser) {
-//         req.flash('errors', { msg: 'There is already a GitHub account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
-//         done(err);
-//       } else {
-//         User.findById(req.user.id, (err, user) => {
-//           if (err) { return done(err); }
-//           user.github = profile.id;
-//           user.tokens.push({ kind: 'github', accessToken });
-//           user.profile.name = user.profile.name || profile.displayName;
-//           user.profile.picture = user.profile.picture || profile._json.avatar_url;
-//           user.profile.location = user.profile.location || profile._json.location;
-//           user.profile.website = user.profile.website || profile._json.blog;
-//           user.save((err) => {
-//             req.flash('info', { msg: 'GitHub account has been linked.' });
-//             done(err, user);
-//           });
-//         });
-//       }
-//     });
-//   } else {
-//     User.findOne({ github: profile.id }, (err, existingUser) => {
-//       if (err) { return done(err); }
-//       if (existingUser) {
-//         return done(null, existingUser);
-//       }
-//       User.findOne({ email: profile._json.email }, (err, existingEmailUser) => {
-//         if (err) { return done(err); }
-//         if (existingEmailUser) {
-//           req.flash('errors', { msg: 'There is already an account using this email address. Sign in to that account and link it with GitHub manually from Account Settings.' });
-//           done(err);
-//         } else {
-//           const user = new User();
-//           user.email = profile._json.email;
-//           user.github = profile.id;
-//           user.tokens.push({ kind: 'github', accessToken });
-//           user.profile.name = profile.displayName;
-//           user.profile.picture = profile._json.avatar_url;
-//           user.profile.location = profile._json.location;
-//           user.profile.website = profile._json.blog;
-//           user.save((err) => {
-//             done(err, user);
-//           });
-//         }
-//       });
-//     });
-//   }
-// }));
+/**
+ * Sign in with GitHub.
+ */
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_ID,
+  clientSecret: process.env.GITHUB_SECRET,
+  callbackURL: '/auth/github/callback',
+  passReqToCallback: true
+}, (req, accessToken, refreshToken, profile, done) => {
+  if (req.user) {
+    User.findOne({ github: profile.id }, (err, existingUser) => {
+      if (existingUser) {
+        req.flash('errors', { msg: 'There is already a GitHub account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
+        done(err);
+      } else {
+        User.findById(req.user.id, (err, user) => {
+          if (err) { return done(err); }
+          user.github = profile.id;
+          user.tokens.push({ kind: 'github', accessToken });
+          user.profile.name = user.profile.name || profile.displayName;
+          user.profile.picture = user.profile.picture || profile._json.avatar_url;
+          user.profile.location = user.profile.location || profile._json.location;
+          user.profile.website = user.profile.website || profile._json.blog;
+          user.save((err) => {
+            req.flash('info', { msg: 'GitHub account has been linked.' });
+            done(err, user);
+          });
+        });
+      }
+    });
+  } else {
+    User.findOne({ github: profile.id }, (err, existingUser) => {
+      if (err) { return done(err); }
+      if (existingUser) {
+        return done(null, existingUser);
+      }
+      User.findOne({ email: profile._json.email }, (err, existingEmailUser) => {
+        if (err) { return done(err); }
+        if (existingEmailUser) {
+          req.flash('errors', { msg: 'There is already an account using this email address. Sign in to that account and link it with GitHub manually from Account Settings.' });
+          done(err);
+        } else {
+          const user = new User();
+          user.email = profile._json.email;
+          user.github = profile.id;
+          user.tokens.push({ kind: 'github', accessToken });
+          user.profile.name = profile.displayName;
+          user.profile.picture = profile._json.avatar_url;
+          user.profile.location = profile._json.location;
+          user.profile.website = profile._json.blog;
+          user.save((err) => {
+            done(err, user);
+          });
+        }
+      });
+    });
+  }
+}));
 //
 // // Sign in with Twitter.
 //
@@ -512,7 +512,7 @@ passport.deserializeUser((id, done) => {
  * Login Required middleware.
  */
 exports.isAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() || process.env.ENVIRONMENT === "DEV") {
     return next();
   }
   res.status(403);
@@ -527,7 +527,7 @@ exports.isAuthenticated = (req, res, next) => {
 exports.isAuthorized = (req, res, next) => {
   const provider = req.path.split('/').slice(-1)[0];
   const token = req.user.tokens.find(token => token.kind === provider);
-  if (token) {
+  if (token || process.env.ENVIRONMENT === "DEV") {
     next();
   } else {
     res.status(401);

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
+var dest = require('./routes/destinations');
 var app = express();
 
 // uncomment after placing your favicon in /public
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use('/', index);
 app.use('/users', users);
 app.use('/auth', auth);
+app.use('/dest', dest);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
