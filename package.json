@@ -7,6 +7,7 @@
     "app": "ng serve -o"
   },
   "dependencies": {
+    "@angular-devkit/core": "^0.0.28",
     "@angular/animations": "^5.0.0",
     "@angular/common": "^5.0.0",
     "@angular/compiler": "^5.0.0",
