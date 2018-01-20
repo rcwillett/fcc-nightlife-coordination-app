@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
 import { IDestination } from '../idestination';
-
 import { DestinationService } from '../destination.service';
 
 @Component({

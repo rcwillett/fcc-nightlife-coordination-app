@@ -9,7 +9,7 @@ export class DestinationService {
   constructor(private http: HttpClient) { }
   
   searchDestinations(searchTerm): Observable<IDestination[]> {
-      return this.http.get<IDestination[]>('/search-destinations',
+      return this.http.get<IDestination[]>('dest/search-destinations',
       {
       params: {
          'search': searchTerm 
