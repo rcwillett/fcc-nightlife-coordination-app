@@ -1,3 +1,5 @@
-<p>
-  destination-search works!
-</p>
+<h1>Search For Destinations</h1>
+<form novalidate='novalidate' (ngSubmit)='searchForDestinations' >
+    <input type='search' [(ngModel)]='searchTerm' placeholder='Search For Destinations' />
+    <input type='submit' value='Search' />
+</form>

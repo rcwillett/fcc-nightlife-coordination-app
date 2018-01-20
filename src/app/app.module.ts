@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { DestinationSearchComponent } from './destination-search/destination-search.component';
 
+import { DestinationService } from './destination.service';
+
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { DestinationSearchComponent } from './destination-search/destination-sea
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    DestinationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
