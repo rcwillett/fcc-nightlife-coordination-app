@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IAPIResponse } from '../iapiresponse';
 import { IDestination } from '../idestination';
 import { DestinationService } from '../destination.service';
 
@@ -10,17 +11,17 @@ import { DestinationService } from '../destination.service';
 export class DestinationSearchComponent implements OnInit {
 
   searchTerm: string;
-  destinations: IDestination;
+  destinations: IDestination[];
 
   constructor(private destinationService: DestinationService) { }
 
   ngOnInit() {
     this.searchTerm = '';
-    this.destinations = [];
+    this.destinations = <IDestination[]>[];
   }
   
   searchForDestinations(): void {
-    this.destinationService.searchDestinations(this.searchTerm).subscribe(destinationResults => this.destinations = destinationResults);
+    this.destinationService.searchDestinations(this.searchTerm).subscribe(resp => this.destinations = resp.businesses);
     return;
   }
   

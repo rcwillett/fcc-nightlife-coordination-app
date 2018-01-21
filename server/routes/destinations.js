@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 const NodeCache  = require('node-cache');
-let destCache = new NodeCache({ stdTTL: 21600, checkperiod: 0 });
+const destCache = new NodeCache({ stdTTL: 21600, checkperiod: 0 });
 
 router.get('/search-destinations', handleSearchRequest);
 

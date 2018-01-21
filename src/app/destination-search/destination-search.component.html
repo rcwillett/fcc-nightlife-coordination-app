@@ -3,3 +3,9 @@
     <input type='text' name='searchTerm' [(ngModel)]='searchTerm' placeholder='Search For Destinations' />
     <input type='submit' value='Search' />
 </form>
+<div *ngFor="let destination of destinations;">
+    <a href='{{destination.url}}'>
+    <img height='50' width='50' src='{{destination.image_url}}' />
+    <h3>{{destination.name}}</h3>
+    </a>
+</div>
