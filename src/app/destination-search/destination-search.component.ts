@@ -10,10 +10,11 @@ import { DestinationService } from '../destination.service';
 })
 export class DestinationSearchComponent implements OnInit {
 
-  searchTerm: string;
+  searchTerm: String;
+  error: any;
   destinations: IDestination[];
 
-  constructor(private destinationService: DestinationService) { }
+  constructor(private _destinationService: DestinationService) { }
 
   ngOnInit() {
     this.searchTerm = '';
@@ -21,8 +22,10 @@ export class DestinationSearchComponent implements OnInit {
   }
   
   searchForDestinations(): void {
-    this.destinationService.searchDestinations(this.searchTerm).subscribe(resp => this.destinations = resp.businesses);
-    return;
+    this._destinationService.searchDestinations(this.searchTerm).subscribe(
+      resp => { this.destinations = resp.businesses.filter(business => !business.is_closed) },
+      error => { this.error = <any>error }
+      );
   }
   
 }
