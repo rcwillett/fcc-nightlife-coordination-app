@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
+const passport = require('passport');
 // const InstagramStrategy = require('passport-instagram').Strategy;
 // const LocalStrategy = require('passport-local').Strategy;
 // const FacebookStrategy = require('passport-facebook').Strategy;
-// const TwitterStrategy = require('passport-twitter').Strategy;
+const TwitterStrategy = require('passport-twitter').Strategy;
 // const GitHubStrategy = require('passport-github').Strategy;
 // const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 // const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
@@ -32,10 +33,10 @@ const request = require('request');
 // router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');
 // });
-// router.get('/twitter', passport.authenticate('twitter'));
-// router.get('/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), (req, res) => {
-//   res.redirect('/');
-// });
+router.get('/twitter', passport.authenticate('twitter'));
+router.get('/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), (req, res) => {
+  res.redirect('/');
+});
 // router.get('/linkedin', passport.authenticate('linkedin', { state: 'SOME STATE' }));
 // router.get('/linkedin/callback', passport.authenticate('linkedin', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');
