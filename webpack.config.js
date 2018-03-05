@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /*
  * We've enabled UglifyJSPlugin for you! This minifies your app
@@ -27,7 +28,7 @@ module.exports = {
 				loader: 'babel-loader',
 
 				options: {
-					presets: ['env', 'react']
+					presets: ['react']
 				}
 			},
 			{
@@ -47,6 +48,10 @@ module.exports = {
 			}
 		]
 	},
-
-	plugins: [new UglifyJSPlugin()]
+	devServer: {
+		publicPath: '/',
+	  contentBase: path.join(__dirname, "src"),
+	  hot: true
+	},
+	plugins: [new UglifyJSPlugin(), new webpack.HotModuleReplacementPlugin(), new HtmlWebpackPlugin({template: './src/index.html'})]
 };
