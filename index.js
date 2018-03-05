@@ -1,15 +1,15 @@
 #!/usr/bin/env node
-require('dotenv').config({ path: './server/config/.env'});
+
+require('dotenv').config({ path: './server/config/.env' });
 
 /**
  * Setup DB
  */
- var mongoose = require("mongoose");
- 
-mongoose.connect(process.env.MONGO_URI);
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-mongoose.Promise = global.Promise;
+// var mongoose = require("mongoose");
+// mongoose.connect(process.env.MONGO_URI);
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// mongoose.Promise = global.Promise;
 
 /**
  * Module dependencies.
