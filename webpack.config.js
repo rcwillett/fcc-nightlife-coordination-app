@@ -49,7 +49,6 @@ module.exports = {
 		]
 	},
 	devServer: {
-		publicPath: '/',
 	  contentBase: path.join(__dirname, "src"),
 	  hot: true
 	},

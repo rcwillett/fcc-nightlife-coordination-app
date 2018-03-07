@@ -3,9 +3,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.sendfile('./public/index.html');
+  res.sendfile('./dist/index.html');
 });
 
-router.get(/[/.js$]?[/.css$]?[/.html]/, express.static('./public'));
+router.get(/[/.js$]?[/.css$]?[/.html]/, express.static('./dist'));
 
 module.exports = router;
