@@ -34,6 +34,7 @@ function getYelpSearchResults (req, res, next, cacheKey) {
     request.get(requestInfo, function(err, resp, body){
         let parsedResponse;
         if (err || resp.statusCode !== 200){
+          console.log(err);
             next(new Error(err));
         }
         else {

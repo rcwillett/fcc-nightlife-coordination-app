@@ -19,7 +19,7 @@ module.exports = {
 		filename: '[name].bundle.js',
 		path: path.resolve(__dirname, 'dist')
 	},
-
+	mode: 'development',
 	module: {
 		rules: [
 			{
@@ -52,5 +52,5 @@ module.exports = {
 	  contentBase: path.join(__dirname, "src"),
 	  hot: true
 	},
-	plugins: [new UglifyJSPlugin(), new webpack.HotModuleReplacementPlugin(), new HtmlWebpackPlugin({template: './src/index.html'})]
+	plugins: [new UglifyJSPlugin(), new webpack.HotModuleReplacementPlugin(), new HtmlWebpackPlugin({template: './src/index.html', minify: false})]
 };
