@@ -1,31 +1,22 @@
 import React from 'react';
 import axios from 'axios';
 // import destinationSearch from '../components/destinationSearch';
-import {Destination} from '../components/destination.jsx';
-import {DestinationSearch} from '../components/destinationSearch.jsx';
+import { Login } from '../components/login.jsx';
+import { DestinationFinder } from './destinationFinder.jsx';
 
 export default class App extends React.Component {
 
-    constructor(props){
-      super(props);
-      this.state = {
-        destinations: []
-      }
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    getDestinations(searchTerm) {
-      axios.get("dest/search-destinations", {params: { search: searchTerm }}).then((resp) => {
-        this.setState({destinations: resp.data.businesses});
-      });
-    }
-
-    render() {
-      return (
+  render() {
+    return (
       <div className="destinationPage">
-        <DestinationSearch getDestinations={this.getDestinations.bind(this)} />
-        {this.state.destinations.map((destination) => (<Destination {...destination} />))}
+      <Login />
+      <DestinationFinder />
       </div>
-      );
-    }
+    );
+  }
 
 };
