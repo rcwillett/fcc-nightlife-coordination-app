@@ -5,8 +5,8 @@ const passport = require('passport');
 // const InstagramStrategy = require('passport-instagram').Strategy;
 // const LocalStrategy = require('passport-local').Strategy;
 // const FacebookStrategy = require('passport-facebook').Strategy;
-const TwitterStrategy = require('passport-twitter').Strategy;
-// const GitHubStrategy = require('passport-github').Strategy;
+// const TwitterStrategy = require('passport-twitter').Strategy;
+const GitHubStrategy = require('passport-github').Strategy;
 // const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 // const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 // const OpenIDStrategy = require('passport-openid').Strategy;
@@ -25,18 +25,18 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 // router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');
 // });
-// router.get('/github', passport.authenticate('github'));
-// router.get('/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
-//   res.redirect('/');
-// });
+router.get('/github', passport.authenticate('github'));
+router.get('/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
+  res.redirect('/');
+});
 // router.get('/google', passport.authenticate('google', { scope: 'profile email' }));
 // router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');
 // });
-router.get('/twitter', passport.authenticate('twitter'));
-router.get('/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect('/');
-});
+// router.get('/twitter', passport.authenticate('twitter'));
+// router.get('/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), (req, res) => {
+//   res.redirect('/');
+// });
 // router.get('/linkedin', passport.authenticate('linkedin', { state: 'SOME STATE' }));
 // router.get('/linkedin/callback', passport.authenticate('linkedin', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');

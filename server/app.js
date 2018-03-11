@@ -5,8 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose= require('mongoose');
+require('./auth/passport.js');
 var index = require('./routes/index');
-var users = require('./routes/users');
 var auth = require('./routes/auth');
 var dest = require('./routes/destinations');
 var app = express();
@@ -20,7 +20,6 @@ app.use(cookieParser());
 
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/auth', auth);
 app.use('/dest', dest);
 
@@ -38,6 +37,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = process.env.ENVIRONMENT === 'DEV' ? err : {};
 
   // render the error page
+  console.log(err);
   res.status(err.status || 500);
   res.send('error');
 });

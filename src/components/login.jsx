@@ -27,7 +27,7 @@ export class Login extends React.Component {
     render() {
         return (
             <div>
-            {this.state.loggedIn ? <div>{this.state.user}</div> : <a href="/auth/login"></a>}
+            {this.state.loggedIn ? <div>{this.state.user}</div> : <a href="/auth/github">Log In</a>}
             </div>
             );
     }
