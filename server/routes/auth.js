@@ -26,9 +26,7 @@ const GitHubStrategy = require('passport-github').Strategy;
 //   res.redirect('/');
 // });
 router.get('/github', passport.authenticate('github'));
-router.get('/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect('/');
-});
+router.get('/github/callback', passport.authenticate('github', { successRedirect: '/', failureRedirect: '/login' }));
 // router.get('/google', passport.authenticate('google', { scope: 'profile email' }));
 // router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');

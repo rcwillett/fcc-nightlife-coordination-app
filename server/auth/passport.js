@@ -15,6 +15,8 @@ const GitHubStrategy = require('passport-github').Strategy;
 
 const User = require('../models/user');
 
+module.exports.init = function(passport){
+
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
@@ -507,6 +509,7 @@ passport.use(new GitHubStrategy({
 //     });
 //   }
 // ));
+}
 
 /**
  * Login Required middleware.

@@ -8,6 +8,8 @@ router.get('/', function(req, res, next) {
 
 /* GET users listing. */
 router.get('/loggedIn', function(req, res, next) {
+  console.log(req.isAuthenticated());
+  console.log(req.user);
   if(req.user){
       res.status(200);
       res.json({status: true, user: req.user});
@@ -15,6 +17,18 @@ router.get('/loggedIn', function(req, res, next) {
   else{
       res.status(200);
       res.json({status: false, user: null});
+  }
+});
+
+router.get('/logout', function(req, res, next){
+  if(req.user){
+    req.logout();
+    res.status(200);
+    res.json({status: true, msg: "Successfully Logged Out"});
+  }
+  else{
+    res.status(500);
+    res.json({status: false, msg: "Error: Not logged in"});
   }
 });
 
