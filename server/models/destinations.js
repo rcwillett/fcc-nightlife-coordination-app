@@ -7,11 +7,7 @@ let destinationSchema = new mongoose.Schema({
 });
 
 destinationSchema.method.addAttendant = function(destId, userId, expireTime, callback, next) {
-        this.model("destination").update(destId, { "$addToSet": { "attendants": userId, "expireAt": expireTime } }, { "new": true, "upsert": true },
-                function(err, result) {
-                        if (err) return next(err);
-                        callback(null, true);
-                });
+        this.model("destination")
 };
 
 module.exports = mongoose.model("destination", destinationSchema);

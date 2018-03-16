@@ -8,8 +8,6 @@ router.get('/', function(req, res, next) {
 
 /* GET users listing. */
 router.get('/loggedIn', function(req, res, next) {
-  console.log(req.isAuthenticated());
-  console.log(req.user);
   if(req.user){
       res.status(200);
       res.json({status: true, user: req.user});

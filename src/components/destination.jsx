@@ -23,7 +23,7 @@ class Destination extends React.Component {
 
   userGoing() {
     let time = new Date();
-    axios.post('/dest/going', { destinationId: this.props.id, time: Date.now(), timeOffset: time.getTimezoneOffset()}).then(
+    axios.post('/dest/going', { destinationId: this.props.id, timeOffset: time.getTimezoneOffset()}).then(
       (resp) => {
         if(resp.data.status){
           this.setState({
