@@ -3,8 +3,11 @@ const router = express.Router();
 const request = require('request');
 const NodeCache  = require('node-cache');
 const destCache = new NodeCache({ stdTTL: 21600, checkperiod: 0 });
+const passportAuth = require('../auth/passport.js');
+const destinations = require('../models/destinations.js');
 
 router.get('/search-destinations', handleSearchRequest);
+router.post('/going', passportAuth.isAuthenticated, handleAttendingDesinationRequest);
 
 module.exports = router;
 
@@ -43,4 +46,15 @@ function getYelpSearchResults (req, res, next, cacheKey) {
             res.json(parsedResponse);
         }
     });
+}
+
+function handleAttendingDesinationRequest (req, res, next){
+    let serverTime = new Date();
+    
+    // let expiryTime = req.body.date
+    // destinations.addAttendant(req.body.destinationId, req.user.github);
+    console.log(req.body);
+    console.log(req.user);
+    res.statusCode = 200;
+    res.json({status: true, message: 'user Added'});
 }

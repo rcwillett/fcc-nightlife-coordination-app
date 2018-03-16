@@ -23,8 +23,9 @@ export class DestinationFinder extends React.Component {
       return (
       <div className="destinationPage">
         <DestinationSearch getDestinations={this.getDestinations.bind(this)} />
-        {this.state.destinations.map((destination) => (<Destination {...destination} />))}
+        {this.state.destinations.map((destination) => (<Destination key={destination.id} {...destination} />))}
       </div>
+      
       );
     }
 
