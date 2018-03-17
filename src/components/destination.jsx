@@ -6,7 +6,8 @@ class Destination extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userAttending: props.attending
+      userAttending: props.attending,
+      usersAttending: props.attendants
     }
   }
   render() {
@@ -18,16 +19,22 @@ class Destination extends React.Component {
         <div className="h5">{this.props.name}</div>
       </div>
       {this.state.userAttending ? (<div>You're Going!</div>) : (<button onClick={this.userGoing.bind(this)}>I'm Going!</button>)}
+      <div>
+      {this.state.usersAttending} - going
+      </div>
     </div>);
   }
 
   userGoing() {
     let time = new Date();
-    axios.post('/dest/going', { destinationId: this.props.id, timeOffset: time.getTimezoneOffset()}).then(
+    axios.post('/dest/going', { destinationId: this.props.id, timeOffset: time.getTimezoneOffset() }).then(
       (resp) => {
-        if(resp.data.status){
-          this.setState({
-            userAttending: true
+        if (resp.data.status) {
+          this.setState((prevState) => {
+            return {
+              userAttending: true,
+              usersAttending: ++prevState.usersAttending
+            };
           });
         }
       },
