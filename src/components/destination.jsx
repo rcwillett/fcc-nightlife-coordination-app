@@ -6,7 +6,7 @@ class Destination extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userAttending: false
+      userAttending: props.attending
     }
   }
   render() {
