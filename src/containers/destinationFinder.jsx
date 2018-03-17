@@ -15,7 +15,7 @@ export class DestinationFinder extends React.Component {
 
     getDestinations(searchTerm) {
       axios.get("dest/search-destinations", {params: { search: searchTerm }}).then((resp) => {
-        this.setState({destinations: resp.data.businesses});
+        this.setState({destinations: resp.data});
       });
     }
 

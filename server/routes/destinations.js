@@ -7,7 +7,7 @@ const passportAuth = require('../auth/passport.js');
 const destinations = require('../models/destinations.js');
 
 router.get('/search-destinations', handleSearchRequest);
-router.post('/going', passportAuth.isAuthenticated, handleAttendingDesinationRequest);
+router.post('/going', passportAuth.isAuthenticated, handleAttendingDestinationRequest);
 
 module.exports = router;
 
@@ -18,7 +18,7 @@ function handleSearchRequest(req, res, next) {
             getYelpSearchResults(req, res, next, cacheKey)
         }
         else {
-            res.json(value);
+            checkIfUserAttending(req, res, next, value);
         }
     });
 }
@@ -43,12 +43,28 @@ function getYelpSearchResults(req, res, next, cacheKey) {
         else {
             parsedResponse = JSON.parse(body);
             destCache.set(cacheKey, parsedResponse);
-            res.json(parsedResponse);
+            checkIfUserAttending(req, res, next, parsedResponse);
         }
     });
 }
 
-function handleAttendingDesinationRequest(req, res, next) {
+function checkIfUserAttending(req, res, next, yelpResp){
+    let mappedResp;
+    if(req.user) {
+        destinations.find({'attendants': req.user.github}, function(err, result) {
+           if(err) return next(err);
+           console.log(result);
+            mappedResp = mapYelpResp(yelpResp.businesses, result.map((destination) => destination.id));
+            res.json(mappedResp);
+        });
+    }
+    else {
+        mappedResp = mapYelpResp(yelpResp.businesses, []);
+        res.json(mappedResp);
+    }
+}
+
+function handleAttendingDestinationRequest(req, res, next) {
     let serverTime = new Date();
     let serverTimeOffset = serverTime.getTimezoneOffset();
     let userTimeToMidnightMs = 86400000 - (Date.now() - req.body.timeOffset * 60000) % 86400000;
@@ -58,8 +74,21 @@ function handleAttendingDesinationRequest(req, res, next) {
     destinations.update({ "id" : req.body.destinationId }, { "$addToSet": { "attendants": req.user.github }, "$set": { "expireAt": serverExpiryTime } }, { "new": true, "upsert": true },
         function(err, result) {
             if (err) return next(err);
-            console.log(result);
             res.statusCode = 200;
             res.json({ status: true, message: 'user Added' });
         });
+}
+
+function mapYelpResp(yelpResp, attendingDestinations){
+    return yelpResp.map((yelpDestination) => {
+        return new yelpBusinessObject(yelpDestination, attendingDestinations);
+    });
+}
+
+//Decorated Yelp Object
+class yelpBusinessObject {
+    constructor(yelpObject, attendingDestinations){
+        Object.assign(this, yelpObject);
+        this.attending = attendingDestinations.indexOf(yelpObject.id) >= 0;
+    }
 }
