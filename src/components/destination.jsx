@@ -12,7 +12,7 @@ class Destination extends React.Component {
   render() {
     return (<div className="row">
       <div className="col-6">
-        <img src={this.props.image_url || 'http://via.placeholder.com/200x200'} />
+        <img width='100px' src={this.props.image_url || 'http://via.placeholder.com/200x200'} />
       </div>
       <div className="col-6">
         <div className="h5">{this.props.name}</div>

@@ -7,6 +7,9 @@ pids
 *.pid
 *.seed
 
+#webpack temp files
+*.hot-update.*
+
 # Environment Data
 server/config/.env
 
