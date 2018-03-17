@@ -50,11 +50,12 @@ function getYelpSearchResults(req, res, next, cacheKey) {
 
 function checkIfUserAttending(req, res, next, yelpResp){
     let mappedResp;
+    let destinationIds;
     if(req.user) {
         destinations.find({'attendants': req.user.github}, function(err, result) {
            if(err) return next(err);
-           console.log(result);
-            mappedResp = mapYelpResp(yelpResp.businesses, result.map((destination) => destination.id));
+            destinationIds = result.map((destination) => destination.id);
+            mappedResp = mapYelpResp(yelpResp.businesses, destinationIds);
             res.json(mappedResp);
         });
     }
