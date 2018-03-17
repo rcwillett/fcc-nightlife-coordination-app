@@ -30,6 +30,4 @@ router.get('/logout', function(req, res, next){
   }
 });
 
-router.get(/[/.js$]?[/.css$]?[/.html]/, express.static('./dist'));
-
 module.exports = router;
