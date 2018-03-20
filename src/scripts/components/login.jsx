@@ -11,7 +11,7 @@ export class Login extends React.Component {
         };
         this.isLoggedIn();
     }
-    
+
     isLoggedIn() {
         axios.get('/loggedIn').then((resp) => {
             this.setLoginStatus(resp.data);
@@ -40,11 +40,13 @@ export class Login extends React.Component {
             this.setState({ loading: false, loggedIn: false, userInfo: data.user });
         }
     }
-    
+
     render() {
         return (
-            <div>
-            {this.state.loggedIn ? <div>{this.state.user}<button onClick={this.logout.bind(this)}>Log Out</button></div> : <a href="/auth/github">Log In</a>}
+            <div className="container">
+            <div class="col-sm row reverse">
+            {this.state.loggedIn ? <div>{this.state.user}<button className="primary" onClick={this.logout.bind(this)}>Log Out</button></div> : <a className="button primary" href="/auth/github">Log In</a>}
+            </div>
             </div>
         );
     }

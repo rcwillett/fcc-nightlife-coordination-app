@@ -11,18 +11,34 @@ class Destination extends React.Component {
     }
   }
   render() {
-    return (<div className="row">
-      <div className="col-6">
-        <img width='100px' src={this.props.image_url || 'http://via.placeholder.com/200x200'} />
+    return (
+      <div className="row">
+      <div className="col-sm col-md-8 col-md-offset-2">
+      <div className="card-fluid">
+      <div className="section row">
+      <div className="col-sm">
+      <a href={this.props.url}>
+        <h3>{this.props.name}</h3>
+        </a>
       </div>
-      <div className="col-6">
-        <div className="h5">{this.props.name}</div>
       </div>
+            <div className="section row">
+      <div className="col-sm-6 col-md-4">
+        <img className="media" src={this.props.image_url || 'http://via.placeholder.com/200x200'} />
+      </div>
+      <div className="col-sm-6 col-md-8">
+      <div class="row">
+      <div className="col-sm-12">
       {this.state.userAttending ? (<div>You're Going!</div>) : (<button onClick={this.userGoing.bind(this)}>I'm Going!</button>)}
-      <div>
-      {this.state.usersAttending} - going
+      <div>{this.state.usersAttending} - going</div>
       </div>
-    </div>);
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+    );
   }
 
   userGoing() {
